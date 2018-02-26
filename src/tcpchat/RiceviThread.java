@@ -18,24 +18,47 @@ public class RiceviThread implements Runnable
 {
 	Socket sock=null;
 	BufferedReader inDalServer=null;
+        String ultimo;
+        String username;
+        InviaThread invia;
 	
-	public RiceviThread(Socket sock) {
+	public RiceviThread(Socket sock,String username) {
 		this.sock = sock;
+                this.username=username;
 	}
         
         @Override
 	public void run() {
 		try{
-                    
+                String msgRecieved;
 		inDalServer = new BufferedReader(new InputStreamReader(this.sock.getInputStream()));
-		String msgRecieved = null;
+		
                 
 		while((msgRecieved = inDalServer.readLine())!= null)
 		{
-			System.out.println("Server: " + msgRecieved);
+                        setUltimoMess(msgRecieved);
+			System.out.print("\r" + msgRecieved);
+                        System.out.print("\n");
+                        setUsername(invia.getUsername());
+                        System.out.print(username+": ");
 		}
 		}catch(IOException e){
                     System.out.println(e.getMessage());
                 }
 	}
-}
+        
+        public void setUltimoMess(String mess){
+            this.ultimo=mess;
+        }
+        
+        public String getUltimoMess(){
+            return ultimo;
+        }
+        
+        public void setUsername(String user){
+            username=user;
+        }
+        
+        public void setInvioThread(InviaThread inviat){
+            invia=inviat;
+        }}

@@ -16,11 +16,13 @@ public class Client {
 	{
 		try {
 			Socket socket = new Socket("localhost",444);
-			InviaThread invia = new InviaThread(socket);
-			Thread thread = new Thread(invia);
-                        thread.start();
-			RiceviThread ricevi = new RiceviThread(socket);
+                        String username = "UtenteClient";
+                        RiceviThread ricevi = new RiceviThread(socket,username);
 			Thread thread2 =new Thread(ricevi);
+			InviaThread invia = new InviaThread(socket,username,ricevi);
+			Thread thread = new Thread(invia);
+                        ricevi.setInvioThread(invia);
+                        thread.start();
                         thread2.start();
                         
 		} catch (Exception e) {

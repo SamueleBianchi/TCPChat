@@ -20,10 +20,18 @@ public class InviaThread implements Runnable
 	Socket sock=null;
 	PrintWriter outAlServer=null;
 	BufferedReader tastiera=null;
+        Gestore g;
+        String username;
+        boolean userchange = false;
+        String ultimomess;
+        RiceviThread ricevi;
 	
-	public InviaThread(Socket sock)
+	public InviaThread(Socket sock,String username,RiceviThread ricevi)
 	{
 		this.sock = sock;
+                this.username=username;
+                this.ricevi=ricevi;
+                
 	}
         
         @Override
@@ -31,17 +39,28 @@ public class InviaThread implements Runnable
 		try{
 		if(sock.isConnected())
 		{
-			System.out.println("Client connesso a "+sock.getInetAddress() + " nella porta "+sock.getPort());
-			this.outAlServer = new PrintWriter(sock.getOutputStream(), true);	
+			System.out.println(username+" connesso a "+sock.getInetAddress() + " nella porta "+sock.getPort());
+			this.outAlServer = new PrintWriter(sock.getOutputStream(), true);
+                        tastiera = new BufferedReader(new InputStreamReader(System.in));
 		while(true){
-                    
-			tastiera = new BufferedReader(new InputStreamReader(System.in));
-			String msgtoServerString=null;
+                        setUltimoMess();
+			String msgtoServerString;
+                        System.out.print(username +": ");
 			msgtoServerString = tastiera.readLine();
-			this.outAlServer.println(msgtoServerString);
+                        g=new Gestore(msgtoServerString,username,userchange,ultimomess);
+                        ultimomess=ricevi.getUltimoMess();
+                        msgtoServerString=g.risposta(msgtoServerString, userchange, ultimomess);
+                        username=g.getAutore(msgtoServerString, userchange);
+                        userchange=g.getUserchange();
+                        
+                        if(userchange==false){
+			this.outAlServer.println(username.concat(": "+msgtoServerString));
 			this.outAlServer.flush();
+                        }else{
+                            userchange=false;
+                        }
 		
-			if(msgtoServerString.equals("end"))
+			if("end".equals(msgtoServerString))
 			break;
                         
 			}
@@ -50,4 +69,17 @@ public class InviaThread implements Runnable
                     System.out.println(e.getMessage());
                 }
 	}
+        
+        
+        
+        public void setUltimoMess(){
+            ultimomess=ricevi.getUltimoMess();
+        }
+        public String getUsername(){
+            return username;
+        }
+        
+        public String getUltimoMess(){
+            return ultimomess;
+        }
 }
