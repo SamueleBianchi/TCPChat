@@ -27,31 +27,38 @@ public class InviaAlClientThread implements Runnable
         boolean userchange = false;
         String ultimomess;
         RiceviDalClientThread ricevi;
+        BufferedReader tastiera;
+        String msgAlClient;
+        boolean online= false;
 	
 	public InviaAlClientThread(Socket clientSock,String username,RiceviDalClientThread ricevi)
 	{
 		this.clientSock = clientSock;
                 this.username=username;
                 this.ricevi=ricevi;
+                this.online=true;
 	}
         @Override
 	public void run() {
 		try{
+                if(clientSock.isConnected()){    
                     
 		outAlClient =new PrintWriter(new OutputStreamWriter(this.clientSock.getOutputStream()));
-		
+		tastiera = new BufferedReader(new InputStreamReader(System.in));
+                
 		while(true)
 		{
                         setUltimoMess();
-			String msgAlClient;
-			BufferedReader tastiera = new BufferedReader(new InputStreamReader(System.in));
 			System.out.print(username +": ");
 			msgAlClient = tastiera.readLine();
+                        ultimomess=ricevi.getUltimoMess();
 			g=new Gestore(msgAlClient,username,userchange,ultimomess);
+                        
+                        if((g.setOnline(msgAlClient,online)==true)&&(getOnline()==true)){
                         msgAlClient=g.risposta(msgAlClient, userchange, ultimomess);
                         username=g.getAutore(msgAlClient, userchange);
                         userchange=g.getUserchange();
-                        ultimomess=g.getUltimoMess();
+                        
                         if(userchange==false){
 			this.outAlClient.println(username.concat(": "+msgAlClient));
 			this.outAlClient.flush();
@@ -62,9 +69,23 @@ public class InviaAlClientThread implements Runnable
 			if("end".equals(msgAlClient))
 			break;
                         
-			}
+			}else{
+                            online=false;
+                            while(online==false){
+                            String on;
+                            System.out.print(username +": ");
+                            on=tastiera.readLine();
+                            setOnline(g.setOnline(on,online));
+                            if(g.setOnline(on,online)==true){
+                            this.online=g.setOnline(on,true);
+                            online=true;
+                            break;}
+                            }
+                        }
+                }
+                }
 		clientSock.close();
-                } 
+                }
                 catch (IOException ex) {
                 Logger.getLogger(InviaAlClientThread.class.getName()).log(Level.SEVERE, null, ex);
             }	
@@ -75,5 +96,11 @@ public class InviaAlClientThread implements Runnable
         }
         public String getUsername(){
             return username;
+        }
+        public boolean getOnline(){
+            return online;
+        }
+        public void setOnline(boolean on){
+            this.online=on;
         }
 }

@@ -22,7 +22,6 @@ public class Server {
 		ServerSocket sSocket = new ServerSocket(port);
 		Socket connection = sSocket.accept();
 		System.out.println("Recieved connection from "+connection.getInetAddress()+" on port "+connection.getPort());
-		//create two threads to invia and ricevi from client
 		RiceviDalClientThread ricevi = new RiceviDalClientThread(connection,username);
 		Thread thread = new Thread(ricevi);
 		InviaAlClientThread invia = new InviaAlClientThread(connection,username,ricevi);

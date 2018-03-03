@@ -25,12 +25,15 @@ public class InviaThread implements Runnable
         boolean userchange = false;
         String ultimomess;
         RiceviThread ricevi;
-	
+        String msgtoServerString;
+	boolean online= false;
+         
 	public InviaThread(Socket sock,String username,RiceviThread ricevi)
 	{
 		this.sock = sock;
                 this.username=username;
                 this.ricevi=ricevi;
+                this.online=true;
                 
 	}
         
@@ -44,11 +47,12 @@ public class InviaThread implements Runnable
                         tastiera = new BufferedReader(new InputStreamReader(System.in));
 		while(true){
                         setUltimoMess();
-			String msgtoServerString;
-                        System.out.print(username +": ");
+			System.out.print(username +": ");
 			msgtoServerString = tastiera.readLine();
                         g=new Gestore(msgtoServerString,username,userchange,ultimomess);
                         ultimomess=ricevi.getUltimoMess();
+                        
+                        if((g.setOnline(msgtoServerString,online)==true)&&(getOnline()==true)){
                         msgtoServerString=g.risposta(msgtoServerString, userchange, ultimomess);
                         username=g.getAutore(msgtoServerString, userchange);
                         userchange=g.getUserchange();
@@ -63,8 +67,21 @@ public class InviaThread implements Runnable
 			if("end".equals(msgtoServerString))
 			break;
                         
-			}
-		sock.close();}
+                        }else{
+                            online=false;
+                            while(online==false){
+                            String on;
+                            System.out.print(username +": ");
+                            on=tastiera.readLine();
+                            setOnline(g.setOnline(on,online));
+                            if(g.setOnline(on,online)==true){
+                            this.online=g.setOnline(on,true);
+                            online=true;
+                            break;}
+                            }
+                        }
+                }}
+		sock.close();
                 }catch(IOException e){
                     System.out.println(e.getMessage());
                 }
@@ -81,5 +98,11 @@ public class InviaThread implements Runnable
         
         public String getUltimoMess(){
             return ultimomess;
+        }
+        public boolean getOnline(){
+            return online;
+        }
+        public void setOnline(boolean on){
+            this.online=on;
         }
 }

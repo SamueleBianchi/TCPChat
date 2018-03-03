@@ -21,7 +21,7 @@ public class Client {
 			Thread thread2 =new Thread(ricevi);
 			InviaThread invia = new InviaThread(socket,username,ricevi);
 			Thread thread = new Thread(invia);
-                        ricevi.setInvioThread(invia);
+                        ricevi.setInviaThread(invia);
                         thread.start();
                         thread2.start();
                         

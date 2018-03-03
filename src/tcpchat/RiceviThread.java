@@ -14,7 +14,7 @@ import java.net.Socket;
  *
  * @author Samuele
  */
-public class RiceviThread implements Runnable
+class RiceviThread implements Runnable
 {
 	Socket sock=null;
 	BufferedReader inDalServer=null;
@@ -33,18 +33,30 @@ public class RiceviThread implements Runnable
                 String msgRecieved;
 		inDalServer = new BufferedReader(new InputStreamReader(this.sock.getInputStream()));
 		
-                
+                while(true && invia.getOnline()){
+                    
 		while((msgRecieved = inDalServer.readLine())!= null)
 		{
+                    if(msgRecieved.equals("end"))
+			{
+				break;//break to close socket if EXIT
+			}
+                    if(invia.getOnline()==true){
                         setUltimoMess(msgRecieved);
 			System.out.print("\r" + msgRecieved);
                         System.out.print("\n");
                         setUsername(invia.getUsername());
                         System.out.print(username+": ");
+                    }
 		}
+                this.sock.close();
+                System.out.print("Connessione chiusa");
+                System.exit(0);
+                }
 		}catch(IOException e){
                     System.out.println(e.getMessage());
                 }
+                
 	}
         
         public void setUltimoMess(String mess){
@@ -59,6 +71,7 @@ public class RiceviThread implements Runnable
             username=user;
         }
         
-        public void setInvioThread(InviaThread inviat){
+        public void setInviaThread(InviaThread inviat){
             invia=inviat;
-        }}
+        }
+}

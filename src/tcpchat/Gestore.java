@@ -46,13 +46,25 @@ public class Gestore {
        switch(verifica()){
            
                             case "smile":
-                                msgtoServerString=":)";
+                                msgtoServerString="\u263A";
                                 break;
                             case "echo":
                                 setUltimomess(ultimomess);
                                 msgtoServerString=getUltimoMess();
+                                String[] array = msgtoServerString.split(" ");
+                                msgtoServerString="";
+                                for(int i=1;i<array.length;i++){
+                                    if(i==1){
+                                        msgtoServerString=msgtoServerString.concat(array[i]);
+                                    }else{
+                                    msgtoServerString=msgtoServerString.concat(" "+array[i]);
+                                    }
+                                }
                                 break;
+                            case "like":
+                                msgtoServerString="\ud83d\udc4d";
                         }
+        setUltimomess(msgtoServerString);
         return msgtoServerString;
        
    }
@@ -75,6 +87,19 @@ public class Gestore {
             }
             return username;
         }
+        
+        public boolean setOnline(String cmd,boolean online){
+            boolean on=online;
+            if(cmd.contains("non in linea")){
+                on= false;
+            }else{
+                if(cmd.contains("in linea")){
+                    on=true;
+                }
+            }
+            return on;
+        }
+        
         public String getUsername(){
             return username;
         }

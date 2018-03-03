@@ -20,6 +20,7 @@ public class RiceviDalClientThread implements Runnable
         String ultimo;
         String username;
         InviaAlClientThread invia;
+        String messageString;
 	
 	public RiceviDalClientThread(Socket clientSocket,String username)
 	{
@@ -33,32 +34,34 @@ public class RiceviDalClientThread implements Runnable
 		try{
                     
 		inDalClient = new BufferedReader(new InputStreamReader(this.clientSocket.getInputStream()));		
-		
-		String messageString;
-		while(true){
+                
+		while(true && invia.getOnline()){
+                    
 		while((messageString = inDalClient.readLine())!= null){
-                    setUltimoMess(messageString);
+                    
 			if(messageString.equals("end"))
 			{
 				break;//break to close socket if EXIT
 			}
+                        if(invia.getOnline()==true){
+                        setUltimoMess(messageString);
 			System.out.print("\r" + messageString);
                         System.out.print("\n");
+                        
                         setUsername(invia.getUsername());
                         System.out.print(username+": ");
+                        }
 		}
 		this.clientSocket.close();
 		System.exit(0);
-	}
-		
-	}
+                }}
 	catch(Exception ex){
             System.out.println(ex.getMessage());
         }
 	}
         
         public void setUltimoMess(String mess){
-            ultimo=mess;
+            this.ultimo=mess;
         }
         
         public String getUltimoMess(){
@@ -72,5 +75,7 @@ public class RiceviDalClientThread implements Runnable
         public void setInvioThread(InviaAlClientThread inviat){
             invia=inviat;
         }
+        
+  
 }
 
