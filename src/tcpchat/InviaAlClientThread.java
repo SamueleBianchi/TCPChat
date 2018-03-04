@@ -20,17 +20,33 @@ import java.util.logging.Logger;
  */
 public class InviaAlClientThread implements Runnable
 {
+        //stream per inviare messaggi al client
 	PrintWriter outAlClient;
+        //socket di tipo datasocket del client
 	Socket clientSock = null;
+        //oggetto di classe Gestore
         Gestore g;
+        //username del server
         String username;
+        //variabile booleana per il cambio di username inizialmente inizializzata a false
         boolean userchange = false;
+        //ultimo messaggio ricevuto
         String ultimomess;
+        //oggetto di classe RiceviDalClientThread
         RiceviDalClientThread ricevi;
+        //stream per la scrittura da tastiera dei comandi/messaggi da inviare al client
         BufferedReader tastiera;
+        //stringa da inviare al client
         String msgAlClient;
+        //variabile booleana che specifica se il server online o meno
         boolean online= false;
 	
+        /**
+         * 
+         * @param clientSock socket del client
+         * @param username username del server
+         * @param ricevi oggetto di classe RiceviDalClientThread
+         */
 	public InviaAlClientThread(Socket clientSock,String username,RiceviDalClientThread ricevi)
 	{
 		this.clientSock = clientSock;
@@ -91,15 +107,31 @@ public class InviaAlClientThread implements Runnable
             }	
 	}
         
+        //aggiorna l'ultimo messaggio ricevuto
          public void setUltimoMess(){
             ultimomess=ricevi.getUltimoMess();
         }
+         
+        /**
+         * 
+         * @return l'username del server
+         */
         public String getUsername(){
             return username;
         }
+        
+        /**
+         * 
+         * @return true se il server è online, false se è offline
+         */
         public boolean getOnline(){
             return online;
         }
+        
+        /**
+         * 
+         * @param on variabile booleana per impostare il server online/offline
+         */
         public void setOnline(boolean on){
             this.online=on;
         }

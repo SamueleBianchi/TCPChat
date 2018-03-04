@@ -12,6 +12,10 @@ import java.net.Socket;
  * @author Samuele
  */
 public class Client {
+    /**
+     * 
+     * @param args 
+     */
 	public static void main(String[] args)
 	{
 		try {

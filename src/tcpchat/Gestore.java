@@ -9,19 +9,37 @@ package tcpchat;
  *
  * @author Samuele
  */
+/**
+ *
+ * @author Samuele
+ */
 public class Gestore {
+    //stringa contenente il comando/messaggio da inviare al destinatario
     public String cmd;
+    //username dell'utente
     public String username;
+    //variabile booleana per verificare se l'utente ha cambiato username 
     public boolean userchange;
+    //ultimo messaggio inviato
     String ultimomess;
     
+    /**
+     * 
+     * @param cmd messaggio/comando inserito dall'utente
+     * @param username username dell'utente
+     * @param userchange variabile per la verifica del cambio di username
+     * @param ultimomess ultimo messaggio inviato
+     */
    public Gestore(String cmd,String username,boolean userchange,String ultimomess){
        this.cmd=cmd;
        this.username=username;
        this.userchange=userchange;
        this.ultimomess=ultimomess;
    }
-   
+   /**
+    * 
+    * @return ritorna la stringa corrispondente al comando, altrimenti ritorna il messaggio inserito
+    */
    public String verifica(){
        if(cmd.contains("smile")){
            return "smile";
@@ -41,7 +59,13 @@ public class Gestore {
            return cmd;
        }
    }
-   
+   /**
+    * 
+    * @param msgtoServerString messaggio inserito dall'utente
+    * @param userchange variabile per la modifica dell'username
+    * @param ultimomess ultimo messaggio inviato
+    * @return la stringa da inviare al destinatario
+    */
    public String risposta(String msgtoServerString,boolean userchange,String ultimomess){
        switch(verifica()){
            
@@ -69,12 +93,21 @@ public class Gestore {
        
    }
    
-        
+        /**
+         * 
+         * @param msg comando comprendente la parola "autore"
+         */
         public void setUsernameCmd(String msg){
             String[] arr = msg.split(" "); 
             setUsername(arr[1]);
         }
         
+        /**
+         * 
+         * @param msgtoServerString stringa inserita dall'utente
+         * @param userchange variabile booleana per il cambio di username
+         * @return l'username modificato
+         */
         public String getAutore(String msgtoServerString,boolean userchange){
             if(cmd.contains("autore")){
                 setUsernameCmd(msgtoServerString);
@@ -88,6 +121,12 @@ public class Gestore {
             return username;
         }
         
+        /**
+         * 
+         * @param cmd stringa inserita dall'utente
+         * @param online variabile booleana per verificare se l'utente è online (true) o no (false)
+         * @return true se l'utente ha inserito la stringa "in linea", false se l'utente ha inserito "non in linea"
+         */
         public boolean setOnline(String cmd,boolean online){
             boolean on=online;
             if(cmd.contains("non in linea")){
@@ -100,22 +139,46 @@ public class Gestore {
             return on;
         }
         
+        /**
+         * 
+         * @return l'username dell'utente
+         */
         public String getUsername(){
             return username;
         }
+        
+        /**
+         * 
+         * @param userchange1 variabile booleana per il cambio di username 
+         */
         public void setUserchange(boolean userchange1){
             userchange=userchange1;
         }
+        /**
+         * 
+         * @return true se l'utente ha cambiato username, false se non ha cambiato username
+         */
         public boolean getUserchange(){
             return userchange;
         }
+        /**
+         * 
+         * @param user username da modificare
+         */
         public void setUsername(String user){
             username=user;
         }
+        /**
+         * 
+         * @return l'ultimo messaggio inviato
+         */
         public String getUltimoMess(){
             return ultimomess;
         }
-
+        /**
+         * 
+         * @param ultimomes l'ultimo messaggio inviato 
+         */
     private void setUltimomess(String ultimomes) {
         ultimomess=ultimomes;
     }

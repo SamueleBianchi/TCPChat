@@ -14,14 +14,18 @@ import java.net.Socket;
  * @author Samuele
  */
 public class Server {
+    /**
+     * 
+     * @param args
+     * @throws IOException 
+     */
 	public static void main(String[] args) throws IOException {
             
 		final int port = 444;
                 String username = "SERVER";
-		System.out.println("Server waiting for connection on port "+port);
 		ServerSocket sSocket = new ServerSocket(port);
 		Socket connection = sSocket.accept();
-		System.out.println("Recieved connection from "+connection.getInetAddress()+" on port "+connection.getPort());
+                System.out.println("\u001B[34m"+"Oltre ai semplici messaggi puoi inviare dei messaggi speciali: \n"+"\u001B[34m"+"-autore <nome dell'autore> :se vuoi modificare il tuo username;\n"+"\u001B[34m"+"-non in linea: se vuoi essere temporaneamente offline;\n"+"\u001B[34m"+"-in linea: se vuoi tornare online;\n"+"\u001B[34m"+"-smile :se vuoi inviare l'emoji corrispondente allo smile;\n"+"\u001B[34m"+"-like :se vuoi inviare l'emoji corrispondente al like;\n"+"\u001B[34m"+"-echo :se vuoi inviare l'ultimo messaggio ricevuto;\n"+"\u001B[34m"+"-end :se vuoi terminare la comunicazione;");
 		RiceviDalClientThread ricevi = new RiceviDalClientThread(connection,username);
 		Thread thread = new Thread(ricevi);
 		InviaAlClientThread invia = new InviaAlClientThread(connection,username,ricevi);

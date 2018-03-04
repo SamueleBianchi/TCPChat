@@ -15,13 +15,24 @@ import java.net.Socket;
  */
 public class RiceviDalClientThread implements Runnable
 {
+        //socket del client
 	Socket clientSocket=null;
+        //stream per ricevere messaggi dal client
 	BufferedReader inDalClient;
+        //ultimo messaggio ricevuto
         String ultimo;
+        //username del server
         String username;
+        //oggetto di classe InviaAlClientThread
         InviaAlClientThread invia;
+        //messaggio ricevuto dal client
         String messageString;
-	
+        
+	/**
+         * 
+         * @param clientSocket socket del client per ricevere i suoi messaggi
+         * @param username username del server
+         */
 	public RiceviDalClientThread(Socket clientSocket,String username)
 	{
             this.inDalClient = null;
@@ -41,7 +52,7 @@ public class RiceviDalClientThread implements Runnable
                     
 			if(messageString.equals("end"))
 			{
-				break;//break to close socket if EXIT
+				break;
 			}
                         if(invia.getOnline()==true){
                         setUltimoMess(messageString);
@@ -60,22 +71,39 @@ public class RiceviDalClientThread implements Runnable
         }
 	}
         
+        /**
+         * 
+         * @param mess ultimo messaggio ricevuto
+         */
         public void setUltimoMess(String mess){
             this.ultimo=mess;
         }
         
+        /**
+         * 
+         * @return l'ultimo messaggio ricevuto
+         */
         public String getUltimoMess(){
             return ultimo;
         }
         
+        /**
+         * 
+         * @param user nome dell'username da aggiornare
+         */
         public void setUsername(String user){
             username=user;
         }
         
+        /**
+         * 
+         * @param inviat oggetto di classe InviaAlClientThread
+         */
         public void setInvioThread(InviaAlClientThread inviat){
             invia=inviat;
         }
         
   
 }
+
 

@@ -15,13 +15,23 @@ import java.net.Socket;
  * @author Samuele
  */
 class RiceviThread implements Runnable
-{
+{   
+        //socket del server
 	Socket sock=null;
+        //stream per ricevere messaggi dal server
 	BufferedReader inDalServer=null;
+        //ultimo messaggio ricevuto
         String ultimo;
+        //username del client
         String username;
+        //oggetto di classe InviaThread
         InviaThread invia;
 	
+        /**
+         * 
+         * @param sock socket del server
+         * @param username username del client
+         */
 	public RiceviThread(Socket sock,String username) {
 		this.sock = sock;
                 this.username=username;
@@ -39,7 +49,7 @@ class RiceviThread implements Runnable
 		{
                     if(msgRecieved.equals("end"))
 			{
-				break;//break to close socket if EXIT
+				break;
 			}
                     if(invia.getOnline()==true){
                         setUltimoMess(msgRecieved);
@@ -59,18 +69,34 @@ class RiceviThread implements Runnable
                 
 	}
         
+        /**
+         * 
+         * @param mess ultimo messaggio ricevuto da impostare 
+         */
         public void setUltimoMess(String mess){
             this.ultimo=mess;
         }
         
+        /**
+         * 
+         * @return l'ultimo messaggio ricevuto
+         */
         public String getUltimoMess(){
             return ultimo;
         }
         
+        /**
+         * 
+         * @param user l'username da impostare
+         */
         public void setUsername(String user){
             username=user;
         }
         
+        /**
+         * 
+         * @param inviat oggetto di classe InviaThread
+         */
         public void setInviaThread(InviaThread inviat){
             invia=inviat;
         }
