@@ -58,7 +58,7 @@ public class InviaThread implements Runnable
 		try{
 		if(sock.isConnected())
 		{
-			System.out.println("\u001B[34m"+"Oltre ai semplici messaggi puoi inviare dei messaggi speciali: \n"+"\u001B[34m"+"-autore <nome dell'autore> :se vuoi modificare il tuo username;\n"+"\u001B[34m"+"-non in linea: se vuoi essere temporaneamente offline;\n"+"\u001B[34m"+"-in linea: se vuoi tornare online;\n"+"\u001B[34m"+"-smile :se vuoi inviare l'emoji corrispondente allo smile;\n"+"\u001B[34m"+"-like :se vuoi inviare l'emoji corrispondente al like;\n"+"\u001B[34m"+"-echo :se vuoi inviare l'ultimo messaggio ricevuto;\n"+"\u001B[34m"+"-end :se vuoi terminare la comunicazione;");
+			System.out.println("\u001B[34m"+"Oltre ai semplici messaggi puoi inviare dei messaggi speciali: \n"+"\u001B[34m"+"-autore <nome dell'autore> :se vuoi modificare il tuo username;\n"+"\u001B[34m"+"-non in linea: se vuoi essere temporaneamente offline;\n"+"\u001B[34m"+"-in linea: se vuoi tornare online;\n"+"\u001B[34m"+"-smile :se vuoi inviare l'emoji corrispondente allo smile;\n"+"\u001B[34m"+"-like :se vuoi inviare l'emoji corrispondente al like;\n"+"\u001B[34m"+"-echo :se vuoi inviare l'ultimo messaggio ricevuto;\n"+"\u001B[34m"+"-end :se vuoi terminare la comunicazione;\u001B[0m");
 			this.outAlServer = new PrintWriter(sock.getOutputStream(), true);
                         tastiera = new BufferedReader(new InputStreamReader(System.in));
 		while(true){
