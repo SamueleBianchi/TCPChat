@@ -59,9 +59,13 @@ class RiceviThread implements Runnable
                         System.out.print(username+": ");//stampo il mio username
                     }
 		}
+                try{
                 this.sock.close();//chiudo la connessione
                 System.out.print("Connessione chiusa");
                 System.exit(0);
+                }catch(Exception e){
+                    System.err.print("Errore nella chiusura della connessione: "+ e.getMessage());
+                }
                 }
 		}catch(IOException e){
                     System.out.println(e.getMessage());

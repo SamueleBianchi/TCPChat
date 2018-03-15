@@ -98,9 +98,13 @@ public class InviaThread implements Runnable
                             }
                         }
                 }}
+                try{
 		sock.close();//chiudo la connessione
+                }catch(Exception e){
+                    System.err.print("Errore nella chiusura della connessione: "+ e.getMessage());
+                }
                 }catch(IOException e){
-                    System.out.println(e.getMessage());
+                    System.err.println("Errore di I/O"+e.getMessage());
                 }
 	}
         

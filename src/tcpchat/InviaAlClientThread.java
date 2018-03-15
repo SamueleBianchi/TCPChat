@@ -101,7 +101,11 @@ public class InviaAlClientThread implements Runnable
                         }
                 }
                 }
+                try{
 		clientSock.close();//chiudo la connessione
+                }catch(Exception e){
+                    System.err.print("Errore nella chiusura della connessione: "+ e.getMessage());
+                }
                 }
                 catch (IOException ex) {
                 Logger.getLogger(InviaAlClientThread.class.getName()).log(Level.SEVERE, null, ex);

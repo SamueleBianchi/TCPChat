@@ -64,8 +64,12 @@ public class RiceviDalClientThread implements Runnable
                         System.out.print(username+": ");//stampo il mio username
                         }
 		}
+                try{
 		this.clientSocket.close();//chiudo la connessione
 		System.exit(0);
+                }catch(Exception e){
+                    System.err.print("Errore nella chiusura della connessione: "+ e.getMessage());
+                }
                 }}
 	catch(Exception ex){
             System.out.println(ex.getMessage());
