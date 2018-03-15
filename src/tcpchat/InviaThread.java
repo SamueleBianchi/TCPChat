@@ -70,24 +70,24 @@ public class InviaThread implements Runnable
                         
                         //verifico se sono online, in caso eseguo le istruzioni successive
                         if((g.setOnline(msgtoServerString,online)==true)&&(getOnline()==true)){
-                        msgtoServerString=g.risposta(msgtoServerString, userchange, ultimomess);
-                        username=g.getAutore(msgtoServerString, userchange);
-                        userchange=g.getUserchange();
+                        msgtoServerString=g.risposta(msgtoServerString, userchange, ultimomess);//formulo il messaggio da inviare
+                        username=g.getAutore(msgtoServerString, userchange);//aggiorno l'username
+                        userchange=g.getUserchange();//imposto la variabile di cambio username (true/false)
                         outAlServer.flush();
                         
-                        if(userchange==false){
+                        if(userchange==false){//se l'username non cambia invio username e messaggio al destinatario
 			this.outAlServer.println(username.concat(": "+msgtoServerString));
 			this.outAlServer.flush();
                         }else{
                             userchange=false;
                         }
 		
-			if("end".equals(msgtoServerString))
+			if("end".equals(msgtoServerString))//se il messaggio da inviare è uguale a end esco dal ciclo while
 			break;
                         
                         }else{ //non sono online, quindi fino a che l'utente non scrive "in linea" i messaggi verranno ignorati
                             online=false;
-                            while(online==false){
+                            while(online==false){//ciclo fino a che non scrivo "in linea", in tal caso la variabile "online" tornerà a true
                             String on;
                             System.out.print(username +": ");
                             on=tastiera.readLine();
@@ -98,7 +98,7 @@ public class InviaThread implements Runnable
                             }
                         }
                 }}
-		sock.close();
+		sock.close();//chiudo la connessione
                 }catch(IOException e){
                     System.out.println(e.getMessage());
                 }

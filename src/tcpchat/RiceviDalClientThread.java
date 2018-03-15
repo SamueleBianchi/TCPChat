@@ -50,20 +50,21 @@ public class RiceviDalClientThread implements Runnable
                     
 		while((messageString = inDalClient.readLine())!= null){
                     
-			if(messageString.equals("end"))
+			if(messageString.equals("end"))//se il messaggio ricevuto è uguale a "end" significa che la connessione deve terminare
+                                                        //perciò esco dal ciclo con il break
 			{
 				break;
 			}
                         if(invia.getOnline()==true){//se sono online ricevo i messaggi
-                        setUltimoMess(messageString);
-			System.out.print("\r" + messageString);
+                        setUltimoMess(messageString);//imposto l'ultimo messaggio ricevuto
+			System.out.print("\r" + messageString);//elimino il contenuto della riga con \r e stampo il messaggio ricevuto
                         System.out.print("\n");
                         
                         setUsername(invia.getUsername());
-                        System.out.print(username+": ");
+                        System.out.print(username+": ");//stampo il mio username
                         }
 		}
-		this.clientSocket.close();
+		this.clientSocket.close();//chiudo la connessione
 		System.exit(0);
                 }}
 	catch(Exception ex){

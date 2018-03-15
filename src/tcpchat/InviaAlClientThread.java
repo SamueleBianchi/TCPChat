@@ -77,14 +77,14 @@ public class InviaAlClientThread implements Runnable
                         userchange=g.getUserchange();
                         outAlClient.flush();
                         
-                        if(userchange==false){
+                        if(userchange==false){//se l'username non cambia invio username e messaggio al destinatario
 			this.outAlClient.println(username.concat(": "+msgAlClient));
 			this.outAlClient.flush();
                         }else{
                             userchange=false;
                         }
 		
-			if("end".equals(msgAlClient))
+			if("end".equals(msgAlClient))//se il messaggio da inviare è uguale a end esco dal ciclo while
 			break;
                         
 			}else{//non sono online, quindi fino a che l'utente non scrive "in linea" i messaggi verranno ignorati
@@ -94,14 +94,14 @@ public class InviaAlClientThread implements Runnable
                             System.out.print(username +": ");
                             on=tastiera.readLine();
                             setOnline(g.setOnline(on,online));
-                            if(g.setOnline(on,online)==true){
+                            if(g.setOnline(on,online)==true){//ciclo fino a che non scrivo "in linea", in tal caso la variabile "online" tornerà a true
                             online=true;
                             break;}
                             }
                         }
                 }
                 }
-		clientSock.close();
+		clientSock.close();//chiudo la connessione
                 }
                 catch (IOException ex) {
                 Logger.getLogger(InviaAlClientThread.class.getName()).log(Level.SEVERE, null, ex);

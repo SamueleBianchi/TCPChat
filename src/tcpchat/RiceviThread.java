@@ -47,19 +47,19 @@ class RiceviThread implements Runnable
                     
 		while((msgRecieved = inDalServer.readLine())!= null)
 		{
-                    if(msgRecieved.equals("end"))
-			{
+                    if(msgRecieved.equals("end"))//se il messaggio ricevuto è uguale a "end" significa che la connessione deve terminare
+			{                        //perciò esco dal ciclo con il break
 				break;
 			}
                     if(invia.getOnline()==true){//se sono online ricevo i messaggi
-                        setUltimoMess(msgRecieved);
-			System.out.print("\r" + msgRecieved);
+                        setUltimoMess(msgRecieved);//imposto l'ultimo messaggio
+			System.out.print("\r" + msgRecieved);//elimino il contenuto della riga con \r e stampo il messaggio ricevuto
                         System.out.print("\n");
                         setUsername(invia.getUsername());
-                        System.out.print(username+": ");
+                        System.out.print(username+": ");//stampo il mio username
                     }
 		}
-                this.sock.close();
+                this.sock.close();//chiudo la connessione
                 System.out.print("Connessione chiusa");
                 System.exit(0);
                 }

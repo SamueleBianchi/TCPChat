@@ -5,6 +5,7 @@
  */
 package tcpchat;
 
+import java.io.IOException;
 import java.net.Socket;
 
 /**
@@ -26,10 +27,11 @@ public class Client {
 			InviaThread invia = new InviaThread(socket,username,ricevi);
 			Thread thread = new Thread(invia);
                         ricevi.setInviaThread(invia);
+                        //avvio i thread per iviare e ricevere messaggi
                         thread.start();
                         thread2.start();
                         
-		} catch (Exception e) {
+		} catch (IOException e) {
                     System.out.println(e.getMessage());
                 } 
 	}
