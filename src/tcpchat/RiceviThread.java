@@ -51,7 +51,7 @@ class RiceviThread implements Runnable
 			{
 				break;
 			}
-                    if(invia.getOnline()==true){
+                    if(invia.getOnline()==true){//se sono online ricevo i messaggi
                         setUltimoMess(msgRecieved);
 			System.out.print("\r" + msgRecieved);
                         System.out.print("\n");

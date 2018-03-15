@@ -54,7 +54,7 @@ public class RiceviDalClientThread implements Runnable
 			{
 				break;
 			}
-                        if(invia.getOnline()==true){
+                        if(invia.getOnline()==true){//se sono online ricevo i messaggi
                         setUltimoMess(messageString);
 			System.out.print("\r" + messageString);
                         System.out.print("\n");

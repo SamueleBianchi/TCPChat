@@ -40,7 +40,7 @@ public class Gestore {
     * 
     * @return ritorna la stringa corrispondente al comando, altrimenti ritorna il messaggio inserito
     */
-   public String verifica(){
+   public String verifica(){//restituisce il comando specifico
        if(cmd.contains("smile")){
            return "smile";
        }
@@ -65,6 +65,10 @@ public class Gestore {
     * @param userchange variabile per la modifica dell'username
     * @param ultimomess ultimo messaggio inviato
     * @return la stringa da inviare al destinatario
+    * 
+    * Tramite il metodo verifica() verifico a quali comandi corrisponde il messaggio scritto e formulo una risposta da
+    * inviare al destinatario. Nel caso di echo seleziono l'ultimo messaggio ricevuto (che contiene anche il nome del mittente)
+    * e ne vado inviare solo la parte di messaggio (e non l'username)
     */
    public String risposta(String msgtoServerString,boolean userchange,String ultimomess){
        switch(verifica()){
@@ -96,6 +100,9 @@ public class Gestore {
         /**
          * 
          * @param msg comando comprendente la parola "autore"
+         * 
+         * Il metodo modifica l'username dividendo il messaggio in un array (diviso per ogni spazio presente), di questo
+         * array vado ad assegnare l'username l'elemento dell'array di indice 1 (ovvero l'username stesso)
          */
         public void setUsernameCmd(String msg){
             String[] arr = msg.split(" "); 

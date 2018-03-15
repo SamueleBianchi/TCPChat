@@ -68,6 +68,7 @@ public class InviaThread implements Runnable
                         g=new Gestore(msgtoServerString,username,userchange,ultimomess);
                         ultimomess=ricevi.getUltimoMess();
                         
+                        //verifico se sono online, in caso eseguo le istruzioni successive
                         if((g.setOnline(msgtoServerString,online)==true)&&(getOnline()==true)){
                         msgtoServerString=g.risposta(msgtoServerString, userchange, ultimomess);
                         username=g.getAutore(msgtoServerString, userchange);
@@ -84,7 +85,7 @@ public class InviaThread implements Runnable
 			if("end".equals(msgtoServerString))
 			break;
                         
-                        }else{
+                        }else{ //non sono online, quindi fino a che l'utente non scrive "in linea" i messaggi verranno ignorati
                             online=false;
                             while(online==false){
                             String on;
