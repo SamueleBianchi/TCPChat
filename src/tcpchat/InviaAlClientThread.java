@@ -74,6 +74,7 @@ public class InviaAlClientThread implements Runnable
                         msgAlClient=g.risposta(msgAlClient, userchange, ultimomess);
                         username=g.getAutore(msgAlClient, userchange);
                         userchange=g.getUserchange();
+                        outAlClient.flush();
                         
                         if(userchange==false){
 			this.outAlClient.println(username.concat(": "+msgAlClient));
@@ -93,7 +94,6 @@ public class InviaAlClientThread implements Runnable
                             on=tastiera.readLine();
                             setOnline(g.setOnline(on,online));
                             if(g.setOnline(on,online)==true){
-                            this.online=g.setOnline(on,true);
                             online=true;
                             break;}
                             }

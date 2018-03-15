@@ -72,6 +72,7 @@ public class InviaThread implements Runnable
                         msgtoServerString=g.risposta(msgtoServerString, userchange, ultimomess);
                         username=g.getAutore(msgtoServerString, userchange);
                         userchange=g.getUserchange();
+                        outAlServer.flush();
                         
                         if(userchange==false){
 			this.outAlServer.println(username.concat(": "+msgtoServerString));
@@ -91,7 +92,6 @@ public class InviaThread implements Runnable
                             on=tastiera.readLine();
                             setOnline(g.setOnline(on,online));
                             if(g.setOnline(on,online)==true){
-                            this.online=g.setOnline(on,true);
                             online=true;
                             break;}
                             }
